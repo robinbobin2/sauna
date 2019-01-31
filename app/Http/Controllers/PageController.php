@@ -38,6 +38,7 @@ class PageController extends Controller
 	public function edit_link(Request $request) {
 
 		$link = Link::where('id', $request->id)->first();
+			dd($link);
 		$link->update($request->all());
 		$link->save();
 		return response()->json($link);
