@@ -24,13 +24,30 @@ class PageController extends Controller
 	}
 
 	public function get_links($instagram) {
+
 		$user = User::where('instagram_name', $instagram)->first();
 		$page = Page::where('user_id', $user->id)->first();
 		$links = Link::where('page_id', $page->id)->get();
+		$jsonOutput = array('user' => $user,'page'=>$page,'links'=>$links );
 		// $page->links()->save($link);
 		// dd($instagram);
 		// dd($links);
-		return response()->json($links);
+		return response()->json($jsonOutput);
+	}
+
+	public function edit_link(Request $request) {
+
+		$link = Link::where('id', $request->id)->first();
+		$link->update($request->all());
+		$link->save();
+		return response()->json($link);
+	}
+
+	public function remove_link(Request $request) {
+
+		$link = Link::where('id', $request->id)->first();
+		$link->delete();
+		return response()->json('deleted');
 	}
     //
 }
