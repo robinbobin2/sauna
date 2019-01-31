@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Page;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,12 +22,20 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string',
+            'instagram_name' => 'required|string|unique:users'
         ]);
         $user = new User([
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'instagram_name'=>$request->instagram_name
         ]);
         $user->save();
+        $page = new Page([
+            'user_id' => $user->id,
+            'description' => 'Пример описания страницы',
+            'address' => $user->instagram_name
+        ]);
+        $page->save();
         return response()->json([
             'message' => 'Successfully created user!'
         ], 201);
@@ -47,7 +56,8 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'remember_me' => 'boolean'
+            'remember_me' => 'boolean',
+
         ]);
         $credentials = request(['email', 'password']);
         if(!Auth::attempt($credentials))
