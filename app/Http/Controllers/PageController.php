@@ -35,9 +35,9 @@ class PageController extends Controller
 		return response()->json($jsonOutput);
 	}
 
-	public function edit_link(Request $request) {
+	public function edit_link($id, Request $request) {
 
-		$link = Link::findOrFail($request->id);
+		$link = Link::findOrFail($id);
 		$link->update($request->all());
 		$link->save();
 		return response()->json($link);
@@ -46,7 +46,7 @@ class PageController extends Controller
 	public function remove_link(Request $request) {
 
 		$link = Link::where('id', $request->id)->first();
-		$link->delete();
+		$link->destroy();
 		return response()->json('deleted');
 	}
     //

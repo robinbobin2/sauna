@@ -33,8 +33,9 @@ Route::group([
 ], function() {
     Route::post('add_link', 'PageController@add_link');
     Route::post('remove_link', 'PageController@remove_link');
-    Route::put('edit_link', 'PageController@edit_link');
     Route::put('edit_description', 'PageController@edit_description');
+    Route::put('edit_link/{id}', 'PageController@edit_link');
+
 });
 Route::get('get_links/{instagram}', 'PageController@get_links');
 
