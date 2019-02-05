@@ -8,6 +8,6 @@ class Page extends Model
 {
     //
     protected $fillable = [
-        'user_id', 'description', 'address'
+        'user_id','template_id','title', 'description', 'address'
     ];
 }
