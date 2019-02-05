@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+    public function edit_page($id, Request $request) {
+        $page = Page::findOrFail($id);
+		$page->update($request->all());
+		$page->save();
+		return response()->json($page);
+    }
 	public function add_link(Request $request) {
 		$user = $request->user();
 		$page = Page::where('user_id', $user->id)->first();

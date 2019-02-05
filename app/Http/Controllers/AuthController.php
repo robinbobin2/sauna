@@ -33,14 +33,15 @@ class AuthController extends Controller
         $page = new Page([
             'user_id' => $user->id,
             'description' => 'Пример описания страницы',
-            'address' => $user->instagram_name
+            'address' => $user->instagram_name,
+            'title' => $user->instagram_name
         ]);
         $page->save();
         return response()->json([
             'message' => 'Successfully created user!'
         ], 201);
     }
-  
+
     /**
      * Login user and create token
      *
@@ -78,7 +79,7 @@ class AuthController extends Controller
             )->toDateTimeString()
         ]);
     }
-  
+
     /**
      * Logout user (Revoke the token)
      *
@@ -91,7 +92,7 @@ class AuthController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
-  
+
     /**
      * Get the authenticated User
      *
