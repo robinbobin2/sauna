@@ -14,3 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/img', function () {
+    $form = '<form action="/api/add_avatar" method="post" enctype="multipart/form-data">
+    '.csrf_field().'
+    <input type="file" name="avatar" />
+    <input type="submit" />
+    </form>';
+    return $form;
+});

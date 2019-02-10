@@ -15,7 +15,7 @@ class AddTemplateIdFieldToPagesTable extends Migration
     {
         Schema::table('pages', function (Blueprint $table) {
             $table->string('title')->default('');
-$table->integer('template_id')->default(1);
+            $table->integer('template_id')->default(1);
         });
     }
 
@@ -28,6 +28,8 @@ $table->integer('template_id')->default(1);
     {
         Schema::table('pages', function (Blueprint $table) {
             //
+            $table->dropColumn('title');
+            $table->dropColumn('template_id');
         });
     }
 }

@@ -54,6 +54,16 @@ class PageController extends Controller
 		$link = Link::where('id', $request->id)->first();
 		$link->destroy();
 		return response()->json('deleted');
+    }
+
+    public function avatar(Request $request) {
+        if ($file = $request->file('avatar')) {
+            // dd($file);
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('avatars', $name);
+
+        }
 	}
     //
 }
