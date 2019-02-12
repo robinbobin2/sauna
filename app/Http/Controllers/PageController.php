@@ -10,20 +10,35 @@ use Illuminate\Http\Request;
 class PageController extends Controller
 {
     public function edit_page($id, Request $request) {
-        $page = Page::findOrFail($id);
+        $page = Page::where('id', $id)->first();
+        if ($file = $request->file('avatar')) {
+            // dd($file);
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('avatars', $name);
+            $page->avatar = '/avatars/'.$name;
+            $page->save();
+        }
 		$page->update($request->all());
 		$page->save();
 		return response()->json($page);
     }
 	public function add_link(Request $request) {
 		$user = $request->user();
-		$page = Page::where('user_id', $user->id)->first();
+        $page = Page::where('user_id', $user->id)->first();
+        $image = '';
+        if($request->file('image')) {
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('link_images', $name);
+            $image = '/link_images/'.$name;
+        }
 		$link = Link::create([
 			'page_id'=>$page->id,
 			'link_address'=>$request->link_address,
 			'title'=>$request->title,
 			'description'=>$request->description,
-			'image'=>'',
+			'image'=>$image,
 		]);
 		// $page->links()->save($link);
 		return response()->json($link);
@@ -51,8 +66,7 @@ class PageController extends Controller
 
 	public function remove_link(Request $request) {
 
-		$link = Link::where('id', $request->id)->first();
-		$link->destroy();
+		$link = Link::where('id', $request->id)->delete();
 		return response()->json('deleted');
     }
 
@@ -62,7 +76,10 @@ class PageController extends Controller
             $name = time() . $file->getClientOriginalName();
 
             $file->move('avatars', $name);
-
+            $page = Page::findOrFail($request->id);
+            $page->avatar = '/avatars/'.$name;
+            $page->save();
+            return response()->json($page);
         }
 	}
     //
