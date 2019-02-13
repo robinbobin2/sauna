@@ -71,13 +71,13 @@ class PageController extends Controller
     }
 
     public function avatar(Request $request) {
+        $user = Auth::user();
         if ($file = $request->file('avatar')) {
             // dd($file);
             $name = time() . $file->getClientOriginalName();
 
             $file->move('avatars', $name);
-            $page = Page::findOrFail($request->id);
-            $page->avatar = '/avatars/'.$name;
+            $user->avatar = '/avatars/'.$name;
             $page->save();
             return response()->json($page);
         }
