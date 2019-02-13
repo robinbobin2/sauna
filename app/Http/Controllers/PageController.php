@@ -78,8 +78,8 @@ class PageController extends Controller
 
             $file->move('avatars', $name);
             $user->avatar = '/avatars/'.$name;
-            $page->save();
-            return response()->json($page);
+            $user->save();
+            return response()->json($user);
         }
 	}
     //
