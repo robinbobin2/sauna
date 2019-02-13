@@ -6,6 +6,7 @@ use App\Link;
 use App\Page;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
