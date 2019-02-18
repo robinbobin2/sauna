@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class PageController extends Controller
 {
     public function edit_page($id, Request $request) {
-        $page = Page::where('id', $id)->first();
+        $page = Page::findOrFail($id);
         $input = $request->all();
         if ($file = $request->file('avatar')) {
             // dd($file);
