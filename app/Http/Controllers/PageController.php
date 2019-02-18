@@ -27,7 +27,7 @@ class PageController extends Controller
 		$user = $request->user();
         $page = Page::where('user_id', $user->id)->first();
         $image = '';
-        if($request->file('image')) {
+        if($file = $request->file('image')) {
             $name = time() . $file->getClientOriginalName();
 
             $file->move('link_images', $name);
@@ -60,7 +60,7 @@ class PageController extends Controller
 
 		$link = Link::findOrFail($id);
 		$input = $request->all();
-		if($request->file('image')) {
+		if($file = $request->file('image')) {
             $name = time() . $file->getClientOriginalName();
 
             $file->move('link_images', $name);
