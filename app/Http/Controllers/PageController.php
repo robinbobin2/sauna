@@ -60,14 +60,27 @@ class PageController extends Controller
 	public function edit_link($id, Request $request) {
 
 		$link = Link::findOrFail($id);
-		$link->update($request->all());
-		$link->save();
+		$input = $request->all();
+		if($request->file('image')) {
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('link_images', $name);
+            $image = '/link_images/'.$name;
+            $input->file = $image;
+        }
+		$link->update($input);
 		return response()->json($link);
 	}
 
 	public function remove_link(Request $request) {
+        $user = Auth::user();
+        $page = Page::where('user_id', $user->id)->first();
+        $link = Link::where(function ($query) use ($page, $request) {
+            $query->where('id', $request->id)
+            ->where('page_id', $page->id);
+        })
+        ->delete();
 
-		$link = Link::where('id', $request->id)->delete();
 		return response()->json('deleted');
     }
 
