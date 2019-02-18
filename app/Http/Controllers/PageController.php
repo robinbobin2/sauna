@@ -12,16 +12,15 @@ class PageController extends Controller
 {
     public function edit_page($id, Request $request) {
         $page = Page::where('id', $id)->first();
+        $input = $request->all();
         if ($file = $request->file('avatar')) {
             // dd($file);
             $name = time() . $file->getClientOriginalName();
 
             $file->move('avatars', $name);
-            $page->avatar = '/avatars/'.$name;
-            $page->save();
+            $input->avatar = '/avatars/'.$name;
         }
-		$page->update($request->all());
-		$page->save();
+		$page->update($input);
 		return response()->json($page);
     }
 	public function add_link(Request $request) {
