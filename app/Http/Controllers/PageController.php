@@ -24,7 +24,6 @@ class PageController extends Controller
 		return response()->json($page);
     }
 	public function add_link(Request $request) {
-        return response()->json(Input::get('link_address'));
 		$user = $request->user();
         $page = Page::where('user_id', $user->id)->first();
         $image = '';
