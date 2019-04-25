@@ -36,6 +36,7 @@ Route::group([
     Route::put('edit_description', 'PageController@edit_description');
     Route::put('edit_link/{id}', 'PageController@edit_link');
     Route::put('edit_page/{id}', 'PageController@edit_page');
+    Route::put('edit_theme', 'PageController@edit_theme');
     Route::post('add_avatar', 'PageController@avatar');
 
 });

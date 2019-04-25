@@ -23,6 +23,12 @@ class PageController extends Controller
 		$page->update($input);
 		return response()->json($page);
     }
+    public function edit_theme(Request $request) {
+        $page = Page::findOrFail($request->id);
+        $page->update(['template_id' => $request->theme]);
+
+		return response()->json($page);
+    }
 	public function add_link(Request $request) {
 		$user = $request->user();
         $page = Page::where('user_id', $user->id)->first();
@@ -93,6 +99,8 @@ class PageController extends Controller
             $user->avatar = '/avatars/'.$name;
             $user->save();
             return response()->json($user);
+        } else {
+            return response()->json('no avatar');
         }
 	}
     //
