@@ -31,15 +31,22 @@ Route::group([
 Route::group([
   'middleware' => 'auth:api'
 ], function() {
+    // Page endpoints
     Route::post('add_link', 'PageController@add_link');
     Route::post('remove_link', 'PageController@remove_link');
     Route::put('edit_description', 'PageController@edit_description');
     Route::put('edit_link/{id}', 'PageController@edit_link');
     Route::put('edit_page/{id}', 'PageController@edit_page');
+    Route::put('edit_theme', 'PageController@edit_theme');
     Route::post('add_avatar', 'PageController@avatar');
+
+    // Tarifs endpoints
+    Route::post('update_tarif', 'TarifsController@updateTarif');
+    Route::post('change_to_basic', 'TarifsController@changeToBasic');
 
 });
 Route::get('get_links/{instagram}', 'PageController@get_links');
+Route::get('get_account_types', 'TarifsController@getAccountTypes');
 
 Route::get('/homepage', function() {
 

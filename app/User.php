@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'instagram_name', 'account_type', 'balance', 'email_verified_at', 'avatar'
+        'email', 'password', 'instagram_name', 'account_type', 'balance', 'email_verified_at', 'avatar', 'payed_at', 'payed_until'
     ];
 
     /**
@@ -28,4 +28,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function account_type()
+    {
+        return $this->belongsTo('App\AccountType', 'account_type');
+    }
 }
