@@ -63,7 +63,6 @@ class TarifsController extends Controller
 
 
                 $user = Auth::user();
-                return response()->json(Balance::where('SignatureValue', $request->SignatureValue)->first() );
                 $summa = $request->out_summ;
                 $balance = Balance::create(['SignatureValue'=>$request->SignatureValue, 'user_id'=>$user->id,'ammount'=>$summa]);
                 $balance->save();
