@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Link;
 use App\Page;
 use App\User;
+use App\Stat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -107,6 +108,27 @@ class PageController extends Controller
         } else {
             return response()->json('no avatar');
         }
+    }
+
+    public function add_stat(Request $request) {
+        $stat = Stat::where(function ($query) use ($request) {
+            $query->where('page_id', $request->page_id)
+            ->where('date', strtottime(date(d.m.Y)));
+        })
+        ->first();
+        if ($stat == null) {
+            $stat = Stat::create(['page_id'=>$request->page_id, 'count'=>1, 'date'=>strtottime(date(d.m.Y))]);
+        } else {
+            $stat->count = $stat->count+1;
+            $stat->save();
+        }
+
+        return response()->json($stat);
+    }
+    public function retrieve_stat(Request $request) {
+        $stat = Stat::where('page_id', $request->page_id)->get();
+
+        return response()->json($stat);
 	}
     //
 }

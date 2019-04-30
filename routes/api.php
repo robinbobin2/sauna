@@ -39,6 +39,7 @@ Route::group([
     Route::put('edit_page/{id}', 'PageController@edit_page');
     Route::put('edit_theme', 'PageController@edit_theme');
     Route::post('add_avatar', 'PageController@avatar');
+    Route::post('get_stat', 'PageController@retrieve_stat');
 
     // Tarifs endpoints
     Route::post('update_tarif', 'TarifsController@updateTarif');
@@ -51,6 +52,7 @@ Route::group([
 Route::post('pay', 'TarifsController@pay');
 Route::get('get_links/{instagram}', 'PageController@get_links');
 Route::get('get_account_types', 'TarifsController@getAccountTypes');
+Route::post('add_stat', 'PageController@add_stat');
 
 Route::get('/homepage', function() {
 
