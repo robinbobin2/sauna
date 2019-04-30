@@ -36,7 +36,7 @@ class AuthController extends Controller
             'description' => 'Пример описания страницы',
             'address' => $user->instagram_name,
             'title' => $user->instagram_name,
-            'template_id' => 0
+            'template_id' => 99
         ]);
         $page->save();
         return response()->json([
