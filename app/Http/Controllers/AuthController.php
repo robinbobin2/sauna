@@ -27,14 +27,16 @@ class AuthController extends Controller
         $user = new User([
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'instagram_name'=>$request->instagram_name
+            'instagram_name'=>$request->instagram_name,
+            'account_type' => 1,
         ]);
         $user->save();
         $page = new Page([
             'user_id' => $user->id,
             'description' => 'Пример описания страницы',
             'address' => $user->instagram_name,
-            'title' => $user->instagram_name
+            'title' => $user->instagram_name,
+            'template_id' => 0
         ]);
         $page->save();
         return response()->json([
@@ -69,7 +71,7 @@ class AuthController extends Controller
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(1);
+            $token->expires_at = Carbon::now()->addWeeks(5);
         $token->save();
         return response()->json([
             'access_token' => $tokenResult->accessToken,

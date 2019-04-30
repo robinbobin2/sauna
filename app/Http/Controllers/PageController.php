@@ -53,8 +53,13 @@ class PageController extends Controller
 	public function get_links($instagram) {
 
 		$user = User::where('instagram_name', $instagram)->first();
-		$page = Page::where('user_id', $user->id)->first();
-		$links = Link::where('page_id', $page->id)->get();
+        $page = Page::where('user_id', $user->id)->first();
+        if($user->account_type == 1) {
+            $links = Link::where('page_id', $page->id)->take(4);
+        } else {
+            $links = Link::where('page_id', $page->id)->get();
+
+        }
 		$jsonOutput = array('user' => $user,'page'=>$page,'links'=>$links );
 		// $page->links()->save($link);
 		// dd($instagram);

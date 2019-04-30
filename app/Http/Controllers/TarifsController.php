@@ -12,11 +12,17 @@ class TarifsController extends Controller
     //
     public function updateTarif(Request $request) {
         $user = Auth::user();
-        $user->account_type()->associate($request->type);
-        $user->payed_until = strtotime("+1 month", strtotime(date('Y.m.d')));
-        $user->payed_at = strtotime(date('Y.m.d'));
-        $user->save();
-        return response()->json($user);
+        $type = AccountType::findOrFail($request->type);
+        if($user->account_type !== $request->type && $type->price <= $user->balance) {
+            $user->account_type()->associate($request->type);
+            $user->balance = $user->balance-$type->price;
+            $user->payed_until = strtotime("+1 month", strtotime(date('Y.m.d')));
+            $user->payed_at = strtotime(date('Y.m.d'));
+            $user->save();
+            return response()->json($user);
+        } else {
+            return response()->json(['message' => 'No money']);
+        }
     }
 
     public function changeToBasic(Request $request) {
