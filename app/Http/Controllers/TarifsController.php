@@ -59,11 +59,11 @@ class TarifsController extends Controller
 
         if (isset($request->inv_id)&&isset($request->crc)&&isset($request->SignatureValue)) {
             # code...
-            return response()->json(Balance::where('SignatureValue', $request->SignatureValue)->first() );
-            if (Balance::where('SignatureValue', $request->SignatureValue)->first() == null) {
+
+
 
                 $user = Auth::user();
-
+                return response()->json(Balance::where('SignatureValue', $request->SignatureValue)->first() );
                 $summa = $request->out_summ;
                 $balance = Balance::create(['SignatureValue'=>$request->SignatureValue, 'user_id'=>$user->id,'ammount'=>$summa]);
                 $balance->save();
@@ -72,9 +72,7 @@ class TarifsController extends Controller
                 $user->update(['balance'=>$sum]);
                 $user->save();
                 return response()->json($user);
-            } else {
-                return abort(403, 'Unauthorized action.');
-            }
+
 
         }
     }
