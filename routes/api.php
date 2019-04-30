@@ -43,6 +43,9 @@ Route::group([
     // Tarifs endpoints
     Route::post('update_tarif', 'TarifsController@updateTarif');
     Route::post('change_to_basic', 'TarifsController@changeToBasic');
+    Route::post('pay', 'TarifsController@pay');
+    Route::post('success', 'TarifsController@success');
+    Route::get('fail', 'TarifsController@fail');
 
 });
 Route::get('get_links/{instagram}', 'PageController@get_links');

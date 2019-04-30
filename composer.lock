@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af901df33433b5a5c281f6bcad235047",
+    "content-hash": "b54a592c0ed8298ab824068e931ee96f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1071,6 +1071,48 @@
                 "url"
             ],
             "time": "2018-12-04T20:46:45+00:00"
+        },
+        {
+            "name": "idma/robokassa",
+            "version": "v1.0.0-beta4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/idma/robokassa.git",
+                "reference": "19ce0cd5643fb62cf2b268a87c383b6ee2987692"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/idma/robokassa/zipball/19ce0cd5643fb62cf2b268a87c383b6ee2987692",
+                "reference": "19ce0cd5643fb62cf2b268a87c383b6ee2987692",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Idma\\Robokassa\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "JhaoDa",
+                    "email": "jhaoda@gmail.com"
+                }
+            ],
+            "description": "PHP library for Robokassa payment system",
+            "homepage": "https://github.com/idma/robokassa",
+            "keywords": [
+                "idma",
+                "payment",
+                "robokassa"
+            ],
+            "time": "2017-09-28T05:07:32+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -6405,7 +6447,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "idma/robokassa": 10
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
