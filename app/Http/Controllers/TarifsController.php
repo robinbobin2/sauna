@@ -58,6 +58,7 @@ class TarifsController extends Controller
     {
         if (isset($request->inv_id)&&isset($request->crc)&&isset($request->SignatureValue)) {
             # code...
+            return response()->json($user);
             if (Balance::where('SignatureValue', $request->SignatureValue)->first() == null) {
 
                 $user = Auth::user();
