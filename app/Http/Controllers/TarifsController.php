@@ -40,7 +40,6 @@ class TarifsController extends Controller
 
     public function pay(Request $request)
     {
-        $user = Auth::user();
         $invoice = strtotime("now");
         $payment = new \Idma\Robokassa\Payment(
             'pgrlink', 'w4DmQbM22acqmzh4H3Sg', 'E4l13cA02gEGCHDcSZGx', false
