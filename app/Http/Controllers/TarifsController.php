@@ -56,6 +56,7 @@ class TarifsController extends Controller
     }
     public function success(Request $request)
     {
+        dd( $request->all() );
         if (isset($request->inv_id)&&isset($request->crc)&&isset($request->SignatureValue)) {
             # code...
             if (Balance::where('SignatureValue', $request->SignatureValue)->first() == null) {
