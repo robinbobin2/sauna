@@ -113,11 +113,11 @@ class PageController extends Controller
     public function add_stat(Request $request) {
         $stat = Stat::where(function ($query) use ($request) {
             $query->where('page_id', $request->page_id)
-            ->where('date', strtotime(date(d.m.Y)));
+            ->where('date', strtotime(date('d.m.Y')));
         })
         ->first();
         if ($stat == null) {
-            $stat = Stat::create(['page_id'=>$request->page_id, 'count'=>1, 'date'=>strtotime(date(d.m.Y))]);
+            $stat = Stat::create(['page_id'=>$request->page_id, 'count'=>1, 'date'=>strtotime(date('d.m.Y'))]);
         } else {
             $stat->count = $stat->count+1;
             $stat->save();
