@@ -51,7 +51,7 @@ class TarifsController extends Controller
         ->setDescription('Пополнение баланса на pgr.link');
 
         // redirect to payment url
-        return redirect($payment->getPaymentUrl());
+        return response()->json(['redirect'=>$payment->getPaymentUrl()]);
     }
     public function success(Request $request)
     {
