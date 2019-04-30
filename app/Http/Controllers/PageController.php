@@ -55,7 +55,7 @@ class PageController extends Controller
 		$user = User::where('instagram_name', $instagram)->first();
         $page = Page::where('user_id', $user->id)->first();
         if($user->account_type == 1) {
-            $links = Link::where('page_id', $page->id)->take(4);
+            $links = Link::where('page_id', $page->id)->take(4)->get();
         } else {
             $links = Link::where('page_id', $page->id)->get();
 
