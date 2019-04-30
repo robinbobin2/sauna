@@ -56,9 +56,27 @@ class TarifsController extends Controller
     }
     public function success(Request $request)
     {
-        $user = Auth::user();
-        return response()->json($user);
 
+        if (isset($request->inv_id)&&isset($request->crc)&&isset($request->SignatureValue)) {
+            # code...
+            $user = Auth::user();
+            return response()->json($user);
+            if (Balance::where('SignatureValue', $request->SignatureValue)->first() == null) {
+
+                $user = Auth::user();
+                $summa = $request->out_summ;
+                $balance = Balance::create(['SignatureValue'=>$request->SignatureValue, 'user_id'=>$user->id,'ammount'=>$summa]);
+                $balance->save();
+
+                $sum = $user->balance+$summa;
+                $user->update(['balance'=>$sum]);
+                $user->save();
+                return response()->json($user);
+            } else {
+                return abort(403, 'Unauthorized action.');
+            }
+
+        }
     }
 
     public function fail()
