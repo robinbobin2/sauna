@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Page;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use InstagramAPI\Instagram;
+
 class AuthController extends Controller
 {
     /**
@@ -20,30 +23,39 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string',
-            'instagram_name' => 'required|string|unique:users'
+            'password' => 'required|string'
         ]);
+        $phone = $request->phone;
+        $randomNumber = rand(1000, 9999);
         $user = new User([
-            'email' => $request->email,
+            'name' => $request->name,
+            'surname' => $request->surname,
             'password' => bcrypt($request->password),
-            'instagram_name'=>$request->instagram_name,
-            'account_type' => 1,
+            'hotel_id' => 0,
+            'phone' => $request->phone,
+            'verified' => false,
+            'code' => $randomNumber
         ]);
         $user->save();
-        $page = new Page([
-            'user_id' => $user->id,
-            'description' => 'Пример описания страницы',
-            'address' => $user->instagram_name,
-            'title' => $user->instagram_name,
-            'template_id' => 99
-        ]);
-        $page->save();
-        return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
+        // $url = 'https://smsc.ru/sys/send.php?login=vk_569802&psw=Givemethemoney1&phones=' . $phone . '&mes=Ваш проверочный код для сайта sauna24ufa.ru: ' . $randomNumber;
+        // $ch = curl_init($url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // $contents = curl_exec($ch);
+        // $response = json_decode($contents, true);
+        return response()->json($user);
     }
-
+    public function verify(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        if ($user->code == $request->code) {
+            $user->verified = true;
+            $user->save();
+            return response()->json([
+                'message' => 'Successfully verified user!'
+            ], 201);
+        }
+        return response()->abort();
+    }
     /**
      * Login user and create token
      *
@@ -57,21 +69,19 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email',
+            'phone' => 'required',
             'password' => 'required|string',
-            'remember_me' => 'boolean',
 
         ]);
-        $credentials = request(['email', 'password']);
-        if(!Auth::attempt($credentials))
+        $credentials = request(['phone', 'password']);
+        if (!Auth::attempt($credentials))
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
-        if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(5);
+        $token->expires_at = Carbon::now()->addWeeks(500);
         $token->save();
         return response()->json([
             'access_token' => $tokenResult->accessToken,

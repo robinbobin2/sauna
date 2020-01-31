@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'instagram_name', 'account_type', 'balance', 'email_verified_at', 'avatar', 'payed_at', 'payed_until'
+        'name', 'surname', 'code', 'hotel_id', 'verified', 'password', 'phone'
     ];
 
     /**
