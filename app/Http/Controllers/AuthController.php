@@ -37,11 +37,11 @@ class AuthController extends Controller
             'code' => $randomNumber
         ]);
         $user->save();
-        // $url = 'https://smsc.ru/sys/send.php?login=vk_569802&psw=Givemethemoney1&phones=' . $phone . '&mes=Ваш проверочный код для сайта sauna24ufa.ru: ' . $randomNumber;
-        // $ch = curl_init($url);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // $contents = curl_exec($ch);
-        // $response = json_decode($contents, true);
+        $url = 'https://smsc.ru/sys/send.php?login=vk_569802&psw=Givemethemoney1&phones=' . $phone . '&mes=Ваш проверочный код для сайта sauna24ufa.ru: ' . $randomNumber;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $contents = curl_exec($ch);
+        $response = json_decode($contents, true);
         return response()->json($user);
     }
     public function verify(Request $request)
