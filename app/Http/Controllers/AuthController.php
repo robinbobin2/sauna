@@ -35,7 +35,7 @@ class AuthController extends Controller
             'phone' => $request->phone,
             'verified' => false,
             'code' => $randomNumber,
-            'code' => $request->username,
+            'username' => $request->username,
         ]);
         $user->save();
         // $url = 'https://smsc.ru/sys/send.php?login=vk_569802&psw=Givemethemoney1&phones=' . $phone . '&mes=Ваш проверочный код для сайта sauna24ufa.ru: ' . $randomNumber;
