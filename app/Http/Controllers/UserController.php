@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Booking;
 use App\Page;
 use App\User;
 use Carbon\Carbon;
@@ -113,5 +114,27 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+    }
+    public function book(Request $request)
+    {
+        $user = Auth::user();
+        $booking = Booking::create($request->all());
+        $user->bookings()->save($booking);
+        $bookings = $user->bookings;
+        return response()->json($bookings);
+    }
+    public function unbook(Request $request)
+    {
+        $user = Auth::user();
+        $booking = Booking::findOrFail($request->bid);
+        $user->bookings()->dissociate($booking);
+        $bookings = $user->bookings;
+        return response()->json($bookings);
+    }
+    public function userBookings(Request $request)
+    {
+        $user = Auth::user();
+        $bookings = $user->bookings;
+        return response()->json($bookings);
     }
 }

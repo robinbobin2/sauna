@@ -33,4 +33,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\AccountType', 'account_type');
     }
+    public function bookings()
+    {
+        return $this->hasMany('App\Booking', 'user_id');
+    }
 }

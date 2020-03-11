@@ -33,5 +33,7 @@ Route::group([
     'middleware' => 'auth:api'
 ], function () {
     // Page endpoints
-
+    Route::post('bookings', 'UserController@userBookings');
+    Route::post('book', 'UserController@book');
+    Route::post('unbook', 'UserController@unbook');
 });
